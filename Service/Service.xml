@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<objects xmlns="http://www.springframework.net">
+  <description>Spring注入Service</description>
+  <!--用户管理-->
+  <object id="Service.UserInfo" type="Service.UserInfoManage,Service">
+  </object>
+<!--图片管理-->
+  <object id="Service.Picture" type="Service.PictureManage,Service">
+  </object>
+</objects>

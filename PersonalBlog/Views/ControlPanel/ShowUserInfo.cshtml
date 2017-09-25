@@ -1,0 +1,98 @@
+﻿@{
+    ViewBag.Title = "个人资料";
+}
+@model UserInfo
+<div class="wrapper wrapper-content">
+    <div class="row animated fadeInRight">
+        <div class="col-sm-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>个人资料</h5>
+                </div>
+                <div>
+                    <div class="ibox-content no-padding border-left-right" style="text-align:center;">
+                        <img alt="image" src="@Model.GetHeadImage("big")">
+                        <div class="col-xs-1 pull-right" style="text-align:right;padding-top:8px;">
+                            <a href="@Url.Action("EditUserInfo","ControlPanel",new {userId=Model.Id })">编辑资料</a>
+                            <a style="padding-top:8px;" class="editimage" href="javascript:;" data-url="@Url.Action("_EditHeadImage", "ControlPanel",new {imageId=Model.HeadImage })">修改头像</a>
+                        </div>
+                        <span class="col-xs-3 pull-right"></span>
+                    </div>
+                    <div class="ibox-content profile-content">
+                        <h4 class="col-xs-6">
+                            姓名：<strong>@(string.IsNullOrEmpty(Model.Name)?"未填写": Model.Name)</strong>
+                        </h4>
+                        <h4 class="col-xs-6">
+                            昵称：<strong>@Model.NickName</strong>
+                        </h4>
+                        <h4 class="col-xs-6">
+                            账号：<strong>@Model.Account</strong>
+                        </h4>
+                        <h4 class="col-xs-6">
+                            身份：<strong>@(Tools.GetEnumText(Model.Gender))</strong>
+                        </h4>
+                        <h4 class="col-xs-6">
+                            职业：<strong>@(string.IsNullOrEmpty(Model.Career)?"未填写": Model.Career)</strong>
+                        </h4>
+                        <h4 class="col-xs-6">
+                            邮箱：<strong>@Model.Email</strong>
+                        </h4>
+                        <h4 class="col-xs-6">籍贯：<strong>@(string.IsNullOrEmpty(Model.NativePlace) ? "未填写" : Model.NativePlace)</strong></h4>
+                        <h4 class="col-xs-6">现居地：<strong>@(string.IsNullOrEmpty(Model.PresentAdd) ? "未填写" : Model.PresentAdd)</strong></h4>
+                        <h4 class="col-xs-6">出生日期：<strong>@(Model.BirthDate.HasValue ? Model.BirthDate.Value.ToString("yyyy-MM-dd") : "未填写")</strong></h4>
+                        <h4 class="col-xs-6">注册时间：<strong>@Model.CreateTime.ToString("yyyy-MM-dd HH:mm:ss")</strong></h4>
+
+                        <h4 class="col-xs-12">上次登录时间：<strong>@(Model.LastLoginTime.HasValue ? Model.LastLoginTime.Value.ToString("yyyy-MM-dd HH:mm:ss") : "")</strong></h4>
+                        <h4 class="col-xs-12">兴趣爱好：</h4>
+                        <span class="col-xs-12">@(string.IsNullOrEmpty(Model.Interest) ? "未填写" : Model.Interest)</span>
+                        <h4 class="col-xs-12">关于我：</h4>
+                        <span class="col-xs-12">@(string.IsNullOrEmpty(Model.Description) ? "未填写" : Model.Description)</span>
+                        <div class="row m-t-lg col-xs-12">
+                            <div class="col-sm-4">
+                                <span class="bar">5,3,9,6,5,9,7,3,5,2</span>
+                                <h5><strong>169</strong> 文章</h5>
+                            </div>
+                            <div class="col-sm-4">
+                                <span class="line">5,3,9,6,5,9,7,3,5,2</span>
+                                <h5><strong>28</strong> 关注</h5>
+                            </div>
+                            <div class="col-sm-4">
+                                <span class="bar">5,3,2,-1,-3,-2,2,3,5,2</span>
+                                <h5><strong>240</strong> 关注者</h5>
+                            </div>
+                        </div>
+                        <div class="user-button col-xs-12">
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <button type="button" class="btn btn-primary btn-sm btn-block"><i class="fa fa-envelope"></i> 发送消息</button>
+                                </div>
+                                <div class="col-sm-6">
+                                    <button type="button" class="btn btn-default btn-sm btn-block"><i class="fa fa-coffee"></i> 赞助</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@Scripts.Render("~/Bundles/Peity")
+@Scripts.Render("~/Bundles/Content")
+<script type="text/javascript" src="http://tajs.qq.com/stats?sId=9051096" charset="UTF-8"></script>
+<script type="text/javascript">
+    $(".editimage").on("click", function () {
+        var url = $(this).data("url");
+        $.get(url, function (data) {
+            layer.open({
+                type: 1,
+                title: "修改头像",
+                closeBtn: 2,
+                anim: 2,
+                shadeClose: true,
+                content: data,
+                area: ["800px", "600px"]
+            });
+        })
+    })
+</script>

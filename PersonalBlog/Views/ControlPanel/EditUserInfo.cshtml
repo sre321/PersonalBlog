@@ -1,0 +1,139 @@
+﻿@{
+    ViewBag.Title = "编辑用户资料";
+}
+@model UserInfoEditModel
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>编辑用户资料</h5>
+                    <div class="ibox-tools">
+                        <a class="collapse-link">
+                            <i class="fa fa-chevron-up"></i>
+                        </a>
+                        <a class="close-link">
+                            <i class="fa fa-times"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="ibox-content">
+                    @using (Ajax.BeginForm("EditUserInfo", "ControlPanel", new AjaxOptions { Confirm = "确定要修改么？", HttpMethod = "Post", OnSuccess = "editSuccess" }, new { @class = "form-horizontal m-t" }))
+                    {
+                        @Html.HiddenFor(t => t.Id)
+                        <div class="form-group">
+                            @Html.LabelFor(t => t.Account, new { @class = "col-sm-3 control-label" })
+                            <div class="col-sm-8">
+                                @Html.TextBoxFor(t => t.Account, new { @class = "form-control", @placeholder = "请输入账号" })
+                                @Html.ValidationMessageFor(t => t.Account, null, new { @style = "color:red;" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(t => t.Name, new { @class = "col-sm-3 control-label" })
+                            <div class="col-sm-8">
+                                @Html.TextBoxFor(t => t.Name, new { @class = "form-control", @placeholder = "请输入姓名" })
+                                @Html.ValidationMessageFor(t => t.Name, null, new { @style = "color:red;" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(t => t.NickName, new { @class = "col-sm-3 control-label" })
+                            <div class="col-sm-8">
+                                @Html.TextBoxFor(t => t.NickName, new { @class = "form-control", @placeholder = "请输入昵称" })
+                                @Html.ValidationMessageFor(t => t.NickName, null, new { @style = "color:red;" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(t => t.Gender, new { @class = "col-sm-3 control-label" })
+                            <div class="col-sm-8">
+                                @Html.RadioButtonForEnum(t => t.Gender)
+                                @Html.ValidationMessageFor(t => t.Gender)
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(t => t.BirthDate, new { @class = "col-sm-3 control-label" })
+                            <div class="col-sm-8">
+                                @Html.LayerDateFor(t => t.BirthDate, new { @class = "form-control laydate-icon", @style = "width:42%;" })
+                                <span class="date-icon"></span>
+                                @Html.ValidationMessageFor(t => t.BirthDate, null, new { @style = "color:red;" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(t => t.Career, new { @class = "col-sm-3 control-label" })
+                            <div class="col-sm-8">
+                                @Html.TextBoxFor(t => t.Career, new { @class = "form-control", @placeholder = "请输入职业" })
+                                @Html.ValidationMessageFor(t => t.Career, null, new { @style = "color:red;" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(t => t.PresentAdd, new { @class = "col-sm-3 control-label" })
+                            <div class="col-sm-8">
+                                @Html.PCAlinkageFor(t => t.PresentAdd, 3, new { @class = "form-control", @style = "width:30%;float:left;" })
+                                @Html.ValidationMessageFor(t => t.PresentAdd, null, new { @style = "color:red;" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(t => t.NativePlace, new { @class = "col-sm-3 control-label" })
+                            <div class="col-sm-8">
+                                @Html.PCAlinkageFor(t => t.NativePlace, 3, new { @class = "form-control", @style = "width:30%;float:left;" })
+                                @Html.ValidationMessageFor(t => t.NativePlace, null, new { @style = "color:red;" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(t => t.Interest, new { @class = "col-sm-3 control-label" })
+                            <div class="col-sm-8">
+                                @Html.TextAreaFor(t => t.Interest, new { @class = "form-control", @placeholder = "请输入兴趣爱好", @rows = "3" })
+                                @Html.ValidationMessageFor(t => t.Interest, null, new { @style = "color:red;" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(t => t.Description, new { @class = "col-sm-3 control-label" })
+                            <div class="col-sm-8">
+                                @Html.TextAreaFor(t => t.Description, new { @class = "form-control", @placeholder = "请输入描述", @rows = "5" })
+                                @Html.ValidationMessageFor(t => t.Description, null, new { @style = "color:red;" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-4 col-sm-offset-3">
+                                <button class="btn btn-primary" type="submit">提交</button>
+                                <button class="btn" type="button" onclick="javascript:window.location.href='@Url.Action("ShowUserInfo", "ControlPanel", new { userId = Model.Id })';">取消</button>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@Styles.Render("~/Bundles/Checkbox")
+@Scripts.Render("~/Bundles/Content")
+@Scripts.Render("~/Bundles/Jqueryval")
+@Scripts.Render("~/Bundles/Ajax")
+@Scripts.Render("~/Bundles/Laydate")
+@Scripts.Render("~/Bundles/PCAlinkage")
+@*@Scripts.Render("~/Bundles/Layer")*@
+<script type="text/javascript" src="http://tajs.qq.com/stats?sId=9051096" charset="UTF-8"></script>
+<script type="text/javascript">
+    laydate.render({
+        elem: '#BirthDate', //指定元素
+        theme: "molv",//颜色
+        position: 'fixed',//定位
+        btns: ['clear', 'now']//按钮
+    });
+    //省市选择器
+    pcalinkageInit('PresentAdd');
+    pcalinkageInit('NativePlace');
+    //回调方法
+    function editSuccess(data) {
+        if (data.Status=="1") {
+            layer.msg(data.Msg, {
+                time:2000,
+                icon:1
+            }, function () {
+                window.location.href = '@Url.Action("ShowUserInfo", "ControlPanel", new { userId = Model.Id })';
+            });
+        }
+        else {
+            layer.msg(data.Msg, { icon: 2 });
+        }
+    }
+</script>
